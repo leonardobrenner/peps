@@ -1,0 +1,28 @@
+//================================ RS model version 1 with same rates =================================
+//                                              N=4, R=2
+//=====================================================================================================
+identifiers
+   N       = [0..10];  // amount (and identifier) of processes
+   R       = 1;       // amount of resources
+   mu      = 6;       // rate for leaving a resource for all processes
+   lambda  = 3;       // rate for requesting a resource for all processes
+   f       = lambda * (nb using < R);
+
+events
+   loc Acq (f)   // local events Acq have rate f
+   loc Rel (mu)  // local events Rel have rate mu 
+
+reachability = (nb using <= 1);     // only the states where at the most R
+                                    // resources are being used are reachable
+network rs1 (continuous)  
+  aut P[N] 
+    stt sleeping 
+      to(using)    Acq
+    stt using 
+      to(sleeping) Rel
+
+results
+  full     = nb using == R;     // probability of all resources being used
+  empty    = nb using == 0;     // probability of all resources being available
+  use1     = st P[0] == using;  // probability that the first process uses the resource
+  average  = nb using;          // average number of occupied resources

@@ -1,0 +1,34 @@
+identifiers
+   alpha = 0.1;
+   beta  = 3;
+   mu    = 1.2;
+   pi1   = 0.4;
+   pi2   = 0.6;
+   f     = (st B == b0) * alpha;
+
+events
+   loc e1 (f)
+   syn e2 (beta)
+   syn e3 (mu)
+
+reachability = (st B == b0) || ((st A == a2) && (st B == b1));
+
+network example (continuous)
+  aut A
+    stt a0
+      to (a1) e1
+    stt a1
+      to (a2) e2
+    stt a2
+      to (a0) e3(pi1)
+      to (a1) e3(pi2)
+      
+  aut B
+    stt b0
+      to (b1) e2
+    stt b1
+      to (b0) e3
+
+results
+  resA = st A == a1;
+  resB = st B;

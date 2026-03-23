@@ -1,0 +1,50 @@
+identifiers
+  N        = [0..10]; 
+  n        = 16;
+  K        = [0..100]; 
+  k        = 100;
+  lambda   = 3;       
+  delta    = 4;       
+  delta2   = 8;
+  alfa     = 22;      
+  mu       = 47;      
+  f        = ((nb [tss[0]..tss[10]] on) * alfa) + ((nb [tss[0]..tss[10]] s_on) * alfa * 2); 
+  g        = st queue >= (k * 0.60);
+  ng       = 1 - g;
+ 
+events
+  loc lig   (lambda); 
+  loc des   (delta);  
+  loc des2  (delta2)
+  loc cheg  (f);      
+  loc at    (mu);     
+ 
+reachability = 1;
+
+network TSS (continuous)
+  aut tss[N]   
+    stt off    
+      to(on)   
+        lig(g)
+      to(s_on)
+        lig(ng)
+    stt on  
+      to(off)
+        des
+    stt s_on  
+      to(off)
+        des2
+
+  aut queue
+    stt s[K] 
+      to(--) 
+        at
+      to(++) 
+        cheg
+
+results
+  f_off   = nb [tss[0]..tss[9]] off;
+  f_on    = nb [tss[0]..tss[9]] on;
+  f_s_on  = nb [tss[0]..tss[9]] s_on;
+  u_queue = st queue;
+  p_queue = f - ((st queue !=0)*mu);
