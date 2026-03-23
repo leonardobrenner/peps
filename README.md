@@ -1,4 +1,4 @@
-# peps
+# PEPS
 PEPS is a software tool for solving Stochastic Automata Networks (SAN)   
 
 The current version (2003) is an experimental version. Mathematical basis for SANs may be obtained in the literature.  The main limitations of this version are:
